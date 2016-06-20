@@ -1,0 +1,11 @@
+<Pesoa>
+  <nome>teste Xstream</nome>
+  <a>0</a>
+  <i>0</i>
+  <j>0</j>
+  <d>0</d>
+  <g>0</g>
+  <quantidadeDeAcertos>0</quantidadeDeAcertos>
+  <quantidadeDeErros>0</quantidadeDeErros>
+  <resultado>0</resultado>
+</Pesoa>
