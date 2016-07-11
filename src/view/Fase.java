@@ -31,6 +31,7 @@ import model.Maca;
 import model.Missao;
 import model.PanelMenu;
 import model.Ranking;
+import model.Snake;
 import model.Som;
 
 public class Fase extends JPanel implements ActionListener {
@@ -86,22 +87,30 @@ public class Fase extends JPanel implements ActionListener {
 	private Missao missaoErrada2;
 	private Missao missaoErrada3;
 	private Missao missaoErrada4;
+	
 	private Maca maca2;
+	
 	private Color azula = new Color(204);
+	
 	private Timer timer;
 	
 	private Ranking ranking;
-	private EscreverXML escreve;
 	
+	private EscreverXML escreve;
+	Snake cobra;
 	public Fase (){
 		audio = new Som();
 		audio.jogoIniciar();
+		
+		fundo = new ImageIcon("res/FaseFundo.png").getImage();
 		
 		setFocusable(true);
 		setDoubleBuffered(true);
 
 		addKeyListener(new AdaptadorTeclado());
+		
 		iniciarGame();
+		
 		missao = new Missao();
 		
 		Main.opcoes.carregarConfiguracoes(this, missao);
@@ -119,16 +128,16 @@ public class Fase extends JPanel implements ActionListener {
 		ranking = new Ranking();
 		escreve = new EscreverXML(ranking);
 		ranking.setRanking(escreve.buscarXML());
-
+		
 	}
 	private void iniciarGame() {
-
-		tamanhoCobra = 3;
-
-		for (int z = 0; z < tamanhoCobra; z++) {
-			x[z] = 0 - z * 20;
-			y[z] = 0;
-		}
+		cobra = new Snake(TAMANHOMATRIZ, 0, 0, "direita");
+//		tamanhoCobra = 3;
+//
+//		for (int z = 0; z < tamanhoCobra; z++) {
+//			x[z] = 0 - z * 20;
+//			y[z] = 0;
+//		}
 		Main.player.carregarQuantidade();
 		gerarMissaoLocal();	
 		gerarMissaoErradaLocal();
@@ -143,46 +152,41 @@ public class Fase extends JPanel implements ActionListener {
 	 * 
 	 * */
 
-	private void carregarImagens() {
-		if(cima){
-			ImageIcon iid = new ImageIcon("res/cabecaNorte.png");
-			cabeca = iid.getImage();
-		}
-		if(esquerda){
-			ImageIcon iid = new ImageIcon("res/cabecaOeste.png");
-			cabeca = iid.getImage();
-		}
-		if(direita){
-			ImageIcon iid = new ImageIcon("res/cabecaLeste.png");
-			cabeca = iid.getImage();
-		}	
-		if(baixo){
-			ImageIcon iid = new ImageIcon("res/cabecaSul.png");
-			cabeca = iid.getImage();
-		}
-		//		ImageIcon iia = new ImageIcon("res/MAÇA.png");
-		//		maca = iia.getImage();
-		
-		if(cima){
-			ImageIcon iih = new ImageIcon("res/corpoNorte.png");
-			corpo = iih.getImage();
-		}
-		if(esquerda){
-			ImageIcon iih = new ImageIcon("res/corpoOeste.png");
-			corpo = iih.getImage();
-		}
-		if(direita){
-			ImageIcon iih = new ImageIcon("res/corpoLeste.png");
-			corpo = iih.getImage();
-		}	
-		if(baixo){
-			ImageIcon iih = new ImageIcon("res/corpoSul.png");
-			corpo = iih.getImage();
-		}
-		ImageIcon fundoCarregar = new ImageIcon("res/FaseFundo.png");
-		fundo = fundoCarregar.getImage();
-		
-	}
+//	private void carregarImagens() {
+//		if(cima){
+//			ImageIcon iid = new ImageIcon("res/cabecaNorte.png");
+//			cabeca = iid.getImage();
+//		}
+//		if(esquerda){
+//			ImageIcon iid = new ImageIcon("res/cabecaOeste.png");
+//			cabeca = iid.getImage();
+//		}
+//		if(direita){
+//			ImageIcon iid = new ImageIcon("res/cabecaLeste.png");
+//			cabeca = iid.getImage();
+//		}	
+//		if(baixo){
+//			ImageIcon iid = new ImageIcon("res/cabecaSul.png");
+//			cabeca = iid.getImage();
+//		}
+//		
+//		if(cima){
+//			ImageIcon iih = new ImageIcon("res/corpoNorte.png");
+//			corpo = iih.getImage();
+//		}
+//		if(esquerda){
+//			ImageIcon iih = new ImageIcon("res/corpoOeste.png");
+//			corpo = iih.getImage();
+//		}
+//		if(direita){
+//			ImageIcon iih = new ImageIcon("res/corpoLeste.png");
+//			corpo = iih.getImage();
+//		}	
+//		if(baixo){
+//			ImageIcon iih = new ImageIcon("res/corpoSul.png");
+//			corpo = iih.getImage();
+//		}
+//	}
 
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -207,17 +211,15 @@ public class Fase extends JPanel implements ActionListener {
 		
 		if (ativo) {
 			g.drawImage(maca2.getImagem(), maca2.getX(), maca2.getY(), this);
-//			g.drawImage(maca, macaX, macaY, this);
-//			maca2.desenhoManca(g);
-			carregarImagens();
-			for (int z = 0; z < tamanhoCobra; z++) {
-				if (z == 0) {
-					g.drawImage(cabeca, x[z], y[z], this);
-				} else {
-					g.drawImage(corpo, x[z], y[z], this);
-				}
-			}
-			//Toolkit.getDefaultToolkit().sync();
+//			carregarImagens();
+//			for (int z = 0; z < tamanhoCobra; z++) {
+//				if (z == 0) {
+//					g.drawImage(cabeca, x[z], y[z], this);
+//				} else {
+//					g.drawImage(corpo, x[z], y[z], this);
+//				}
+//			}
+			cobra.desenharCobra(g);
 		}     
 	}
 
@@ -401,23 +403,20 @@ public class Fase extends JPanel implements ActionListener {
 
 	private void checarColisao() {
 
-		for (int z = tamanhoCobra; z > 0; z--) {
-
-			if ((z > 4) && (x[0] == x[z]) && (y[0] == y[z])) {
-				ativo = false;
-				audio.jogoParar();
-//				Main.player.desempenho();
-				
-				recomecar();
-			}
-		}
+//		for (int z = tamanhoCobra; z > 0; z--) {
+//
+//			if ((z > 4) && (x[0] == x[z]) && (y[0] == y[z])) {
+//				ativo = false;
+//				audio.jogoParar();
+//				recomecar();
+//			}
+//		}
 
 		if ((y[0] >= ALTURA)||(y[0] < 0)) {
 			vida--;
 			if(vida<=0){
 				ativo=false;
 				audio.jogoParar();
-//				Main.player.desempenho();
 				recomecar();
 			}
 			esquerda=false;
@@ -438,7 +437,6 @@ public class Fase extends JPanel implements ActionListener {
 			if(vida<=0){
 				ativo=false;
 				audio.jogoParar();
-//				Main.player.desempenho();
 				recomecar();
 			}
 			esquerda=false;
@@ -472,7 +470,6 @@ public class Fase extends JPanel implements ActionListener {
 		if(quantidadeDePerguntas<=0){
 			ativo=false;
 			audio.jogoParar();
-//			Main.player.desempenho();
 			recomecar();
 		}
 	}
@@ -493,13 +490,10 @@ public class Fase extends JPanel implements ActionListener {
 	private void checarvida(){
 		if(vida==0){
 			ativo=false;
-			
-//			Main.player.desempenho();
 			recomecar();
 			missaoResultado=missao.getResultado();
 			maca2.setX(-100);
 			maca2.setY(-100);
-			
 		}
 	}
 	/**
@@ -511,27 +505,21 @@ public class Fase extends JPanel implements ActionListener {
 
 	private void recomecar(){
 		ranking.addNoRanking();
-		
 		audio.jogoParar();
 		j = new JFrame();
-		ImageIcon referencia = new ImageIcon("res/SnakeIcon.png");
-		Image imagemIcone = referencia.getImage();
 		j.setTitle("Mais uma vez?");
 		j.setSize(220,65);
 		j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		j.setIconImage(imagemIcone);
+		j.setIconImage(new ImageIcon("res/SnakeIcon.png").getImage());
 		j.setVisible(true);
 		j.setLocationRelativeTo(null);
 		j.setResizable(false);
-
-
 
 		j.add(recomecar);
 		j.add(sair);
 
 		j.setLayout(new FlowLayout());
-//		recomecar.setBounds(340, 300, 40, 20);
-//		sair.setBounds(390, 300, 40, 20);
+
 		recomecar.addActionListener(this);
 		sair.addActionListener(this);
 
@@ -573,29 +561,29 @@ public class Fase extends JPanel implements ActionListener {
 		}
 	}
 
-	private void mover() {
-
-		for (int z = tamanhoCobra; z > 0; z--) {
-			x[z] = x[(z - 1)];
-			y[z] = y[(z - 1)];
-		}
-
-		if (esquerda) {
-			x[0] -= BOLINHA_TAMANHO;
-		}
-
-		if (direita) {
-			x[0] += BOLINHA_TAMANHO;
-		}
-
-		if (cima) {
-			y[0] -= BOLINHA_TAMANHO;
-		}
-
-		if (baixo) {
-			y[0] += BOLINHA_TAMANHO;
-		}
-	}
+//	private void mover() {
+//
+//		for (int z = tamanhoCobra; z > 0; z--) {
+//			x[z] = x[(z - 1)];
+//			y[z] = y[(z - 1)];
+//		}
+//
+//		if (esquerda) {
+//			x[0] -= BOLINHA_TAMANHO;
+//		}
+//
+//		if (direita) {
+//			x[0] += BOLINHA_TAMANHO;
+//		}
+//
+//		if (cima) {
+//			y[0] -= BOLINHA_TAMANHO;
+//		}
+//
+//		if (baixo) {
+//			y[0] += BOLINHA_TAMANHO;
+//		}
+//	}
 
 	/**
 	 * 
@@ -668,7 +656,8 @@ public class Fase extends JPanel implements ActionListener {
 			checarMaca2();
 			checarColisao();
 			//missao.checarMissao(resultado);
-			mover();
+//			mover();
+			cobra.mover();
 			repaint();
 			}
 		}

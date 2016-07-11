@@ -2,6 +2,7 @@ package model;
 
 import java.applet.Applet;
 import java.applet.AudioClip;
+import java.awt.Toolkit;
 
 public class Som {
 	
@@ -11,10 +12,10 @@ public class Som {
 	private AudioClip botao;
 	
 	public Som(){
-	menu =  Applet.newAudioClip(this.getClass().getResource("menu.wav"));
-	jogo = Applet.newAudioClip(this.getClass().getResource("jogo.wav"));
-	acerto = Applet.newAudioClip(this.getClass().getResource("comendo.wav"));
-	botao = Applet.newAudioClip(this.getClass().getResource("butoes.wav"));
+	menu =  Applet.newAudioClip(Toolkit.getDefaultToolkit().getClass().getResource("/model/menu.wav"));
+	jogo = Applet.newAudioClip(Toolkit.getDefaultToolkit().getClass().getResource("/model/jogo.wav"));
+	acerto = Applet.newAudioClip(Toolkit.getDefaultToolkit().getClass().getResource("/model/comendo.wav"));
+	botao = Applet.newAudioClip(Toolkit.getDefaultToolkit().getClass().getResource("/model/butoes.wav"));
 	}
 	
 	public void menuIniciar(){menu.loop();}

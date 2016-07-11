@@ -1,7 +1,5 @@
 package view;
 
-
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,16 +21,12 @@ import model.Som;
 
 public class TelaDoMenu extends JFrame implements ActionListener{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	private Image imagemIcone;
 	
 	private Som audio;
-	
-	private JLabel fPlayerL/*, sPlayerL*/;
-	private JTextField fPlayerT/*, sPlayerT*/;
+
+	private JLabel primeiroPlayerLabel/*, sPlayerL*/;
+	private JTextField primeiroPlayerField/*, sPlayerT*/;
 	private JButton jogarButton,sairButton,creditosButton,optionButton;
 	private JLabel imagemLabel;
 	//	private JRadioButton umJogador;
@@ -41,19 +35,17 @@ public class TelaDoMenu extends JFrame implements ActionListener{
 	public TelaDoMenu(){
 		audio = new Som();
 		audio.menuIniciar();
-		ImageIcon referencia = new ImageIcon("res/SnakeIcon.png");
-		imagemIcone = referencia.getImage();
 
 		ImageIcon imagem = new ImageIcon("res/Menu.png");
 		imagemLabel = new JLabel(imagem);
 		add(imagemLabel);
 		
-		fPlayerL = new JLabel(new ImageIcon("res/PlayerLabel.png"));
-		imagemLabel.add(fPlayerL);
+		primeiroPlayerLabel = new JLabel(new ImageIcon("res/PlayerLabel.png"));
+		imagemLabel.add(primeiroPlayerLabel);
 
 
-		fPlayerT = new JTextField(10);
-		imagemLabel.add(fPlayerT);
+		primeiroPlayerField = new JTextField(10);
+		imagemLabel.add(primeiroPlayerField);
 		
 
 		//		sPlayerL = new JLabel("Player 2:");
@@ -104,8 +96,8 @@ public class TelaDoMenu extends JFrame implements ActionListener{
 		
 		imagemLabel.setBounds(1,1,1,1);
 		
-		fPlayerL.setBounds(550, 510, 100, 30);
-		fPlayerT.setBounds(650, 510, 130, 30);
+		primeiroPlayerLabel.setBounds(550, 510, 100, 30);
+		primeiroPlayerField.setBounds(650, 510, 130, 30);
 		
 		jogarButton.setBounds(640,360 , 132, 40);
 		jogarButton.setContentAreaFilled(false);
@@ -127,7 +119,7 @@ public class TelaDoMenu extends JFrame implements ActionListener{
 		setTitle("Smart Snake");
 		setSize(800,600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setIconImage(imagemIcone);
+		setIconImage(new ImageIcon("res/SnakeIcon.png").getImage());
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -138,11 +130,11 @@ public class TelaDoMenu extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if((e.getSource()==jogarButton)){
 			audio.botaoInicius();
-			if (fPlayerT.getText().trim().equals("")) {  
+			if (primeiroPlayerField.getText().trim().equals("")) {  
 				JOptionPane.showMessageDialog(null, "Digite um nome");
 				} else {  
 				audio.menuParar();
-				Main.player.setNome(fPlayerT.getText());
+				Main.player.setNome(primeiroPlayerField.getText());
 				setVisible(false);
 				new TelaJogo();
 				}  
