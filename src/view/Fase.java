@@ -55,8 +55,8 @@ public class Fase extends JPanel implements ActionListener {
 
 	private Som audio;
 
-	private final int x[] = new int[TAMANHOMATRIZ];
-	private final int y[] = new int[TAMANHOMATRIZ];
+//	private final int x[] = new int[TAMANHOMATRIZ];
+//	private final int y[] = new int[TAMANHOMATRIZ];
 
 
 	private Image cabeca;
@@ -132,12 +132,7 @@ public class Fase extends JPanel implements ActionListener {
 	}
 	private void iniciarGame() {
 		cobra = new Snake(TAMANHOMATRIZ, 0, 0, "direita");
-//		tamanhoCobra = 3;
-//
-//		for (int z = 0; z < tamanhoCobra; z++) {
-//			x[z] = 0 - z * 20;
-//			y[z] = 0;
-//		}
+		
 		Main.player.carregarQuantidade();
 		gerarMissaoLocal();	
 		gerarMissaoErradaLocal();
@@ -152,41 +147,6 @@ public class Fase extends JPanel implements ActionListener {
 	 * 
 	 * */
 
-//	private void carregarImagens() {
-//		if(cima){
-//			ImageIcon iid = new ImageIcon("res/cabecaNorte.png");
-//			cabeca = iid.getImage();
-//		}
-//		if(esquerda){
-//			ImageIcon iid = new ImageIcon("res/cabecaOeste.png");
-//			cabeca = iid.getImage();
-//		}
-//		if(direita){
-//			ImageIcon iid = new ImageIcon("res/cabecaLeste.png");
-//			cabeca = iid.getImage();
-//		}	
-//		if(baixo){
-//			ImageIcon iid = new ImageIcon("res/cabecaSul.png");
-//			cabeca = iid.getImage();
-//		}
-//		
-//		if(cima){
-//			ImageIcon iih = new ImageIcon("res/corpoNorte.png");
-//			corpo = iih.getImage();
-//		}
-//		if(esquerda){
-//			ImageIcon iih = new ImageIcon("res/corpoOeste.png");
-//			corpo = iih.getImage();
-//		}
-//		if(direita){
-//			ImageIcon iih = new ImageIcon("res/corpoLeste.png");
-//			corpo = iih.getImage();
-//		}	
-//		if(baixo){
-//			ImageIcon iih = new ImageIcon("res/corpoSul.png");
-//			corpo = iih.getImage();
-//		}
-//	}
 
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -211,14 +171,6 @@ public class Fase extends JPanel implements ActionListener {
 		
 		if (ativo) {
 			g.drawImage(maca2.getImagem(), maca2.getX(), maca2.getY(), this);
-//			carregarImagens();
-//			for (int z = 0; z < tamanhoCobra; z++) {
-//				if (z == 0) {
-//					g.drawImage(cabeca, x[z], y[z], this);
-//				} else {
-//					g.drawImage(corpo, x[z], y[z], this);
-//				}
-//			}
 			cobra.desenharCobra(g);
 		}     
 	}
@@ -252,148 +204,103 @@ public class Fase extends JPanel implements ActionListener {
 
 	private void checarMissaoHit() {
 
-		if ((x[0] == maissaoX) && (y[0] == maissaoY)) {
+		if ((cobra.getCabeca().x  == maissaoX) && (cobra.getCabeca().y == maissaoY)) {
 			missaoResultado=missao.getResultado();
 			audio.acertoIniciar();
 			
 			if(missao.checarMissao(missaoResultado)){
 				score+=1;
-				tamanhoCobra++;
-				Main.player.receberAcerto(missao,missaoResultado);
-				Main.player.addAcerto();
-				missao.missao();
-				missaoErrada1.missao();
-				missaoErrada2.missao();
-				missaoErrada3.missao();
-				missaoErrada4.missao();
+				cobra.addCorpo();
+				Main.player.receberAcertos(missao,missaoResultado);
+				gerarMissao();
 				quantidadeDePerguntas --;
 				gerarMissaoLocal();
 				gerarMissaoErradaLocal();
 			}
 		}
-		if ((x[0] == missaoX[0]) && (y[0] == missaoY[0])) {
+		if ((cobra.getCabeca().x  == missaoX[0]) && (cobra.getCabeca().y == missaoY[0])) {
 			missaoResultado=missaoErrada1.getResultado();
 			audio.acertoIniciar();
 			if(missao.checarMissao(missaoResultado)){
 				score+=1;
-				tamanhoCobra++;
-				Main.player.receberAcerto(missao,missaoResultado);
-				Main.player.addAcerto();
-				missao.missao();
-				missaoErrada1.missao();
-				missaoErrada2.missao();
-				missaoErrada3.missao();
-				missaoErrada4.missao();
+				cobra.addCorpo();
+				Main.player.receberAcertos(missao,missaoResultado);
+				gerarMissao();
 				quantidadeDePerguntas --;
 				gerarMissaoLocal();
 				gerarMissaoErradaLocal();
 			}else{
 				score--;
-				tamanhoCobra--;
+				cobra.retiraCorpo();
 				vida--;
-				Main.player.receberErro(missao,missaoResultado);
-				Main.player.addErro();
-				missao.missao();
-				missaoErrada1.missao();
-				missaoErrada2.missao();
-				missaoErrada3.missao();
-				missaoErrada4.missao();
+				Main.player.receberErros(missao,missaoResultado);
+				gerarMissao();
 				quantidadeDePerguntas --;
 				gerarMissaoLocal();
 				gerarMissaoErradaLocal();
 			}
 		}
-		if ((x[0] == missaoX[1]) && (y[0] == missaoY[1])) {
+		if ((cobra.getCabeca().x == missaoX[1]) && (cobra.getCabeca().y == missaoY[1])) {
 			missaoResultado=missaoErrada2.getResultado();
 			audio.acertoIniciar();
 			if(missao.checarMissao(missaoResultado)){
 				score+=1;
-				tamanhoCobra++;
-				Main.player.receberAcerto(missao,missaoResultado);
-				Main.player.addAcerto();
-				missao.missao();
-				missaoErrada1.missao();
-				missaoErrada2.missao();
-				missaoErrada3.missao();
-				missaoErrada4.missao();
+				cobra.addCorpo();
+				Main.player.receberAcertos(missao,missaoResultado);
+				gerarMissao();
 				quantidadeDePerguntas --;
 				gerarMissaoLocal();
 				gerarMissaoErradaLocal();
 			}else{
 				score--;
-				tamanhoCobra--;
+				cobra.retiraCorpo();
 				vida--;
-				Main.player.receberErro(missao,missaoResultado);
-				Main.player.addErro();
-				missao.missao();
-				missaoErrada1.missao();
-				missaoErrada2.missao();
-				missaoErrada3.missao();
-				missaoErrada4.missao();
+				Main.player.receberErros(missao,missaoResultado);
+				gerarMissao();
 				quantidadeDePerguntas --;
 				gerarMissaoLocal();
 				gerarMissaoErradaLocal();
 			}
 		}
-		if ((x[0] == missaoX[2]) && (y[0] == missaoY[2])) {
+		if ((cobra.getCabeca().x == missaoX[2]) && (cobra.getCabeca().y == missaoY[2])) {
 			missaoResultado=missaoErrada3.getResultado();
 			audio.acertoIniciar();
 			if(missao.checarMissao(missaoResultado)){
 				score+=1;
-				tamanhoCobra++;
-				Main.player.receberAcerto(missao,missaoResultado);
-				Main.player.addAcerto();
-				missao.missao();
-				missaoErrada1.missao();
-				missaoErrada2.missao();
-				missaoErrada3.missao();
-				missaoErrada4.missao();
+				cobra.addCorpo();
+				Main.player.receberAcertos(missao,missaoResultado);
+				gerarMissao();
 				quantidadeDePerguntas --;
 				gerarMissaoLocal();
 				gerarMissaoErradaLocal();
 			}else{
 				score--;
-				tamanhoCobra--;
+				cobra.retiraCorpo();
 				vida--;
-				Main.player.receberErro(missao,missaoResultado);
-				Main.player.addErro();
-				missao.missao();
-				missaoErrada1.missao();
-				missaoErrada2.missao();
-				missaoErrada3.missao();
-				missaoErrada4.missao();
+				Main.player.receberErros(missao,missaoResultado);
+				gerarMissao();
 				quantidadeDePerguntas --;
 				gerarMissaoLocal();
 				gerarMissaoErradaLocal();
 			}
 		}
-		if ((x[0] == missaoX[3]) && (y[0] == missaoY[3])) {
+		if ((cobra.getCabeca().x == missaoX[3]) && (cobra.getCabeca().y == missaoY[3])) {
 			missaoResultado=missaoErrada4.getResultado();
 			audio.acertoIniciar();
 			if(missao.checarMissao(missaoResultado)){
 				score+=1;
-				tamanhoCobra++;
-				Main.player.receberAcerto(missao,missaoResultado);
-				Main.player.addAcerto();
-				missao.missao();
-				missaoErrada1.missao();
-				missaoErrada2.missao();
-				missaoErrada3.missao();
-				missaoErrada4.missao();
+				cobra.addCorpo();
+				Main.player.receberAcertos(missao,missaoResultado);
+				gerarMissao();
 				quantidadeDePerguntas --;
 				gerarMissaoLocal();
 				gerarMissaoErradaLocal();
 			}else{
 				score--;
-				tamanhoCobra--;
+				cobra.retiraCorpo();
 				vida--;
-				Main.player.receberErro(missao,missaoResultado);
-				Main.player.addErro();
-				missao.missao();
-				missaoErrada1.missao();
-				missaoErrada2.missao();
-				missaoErrada3.missao();
-				missaoErrada4.missao();
+				Main.player.receberErros(missao,missaoResultado);
+				gerarMissao();
 				quantidadeDePerguntas --;
 				gerarMissaoLocal();
 				gerarMissaoErradaLocal();
@@ -403,50 +310,16 @@ public class Fase extends JPanel implements ActionListener {
 
 	private void checarColisao() {
 
-//		for (int z = tamanhoCobra; z > 0; z--) {
-//
-//			if ((z > 4) && (x[0] == x[z]) && (y[0] == y[z])) {
-//				ativo = false;
-//				audio.jogoParar();
-//				recomecar();
-//			}
-//		}
-
-		if ((y[0] >= ALTURA)||(y[0] < 0)) {
+		if ((cobra.getCabeca().y >= ALTURA)||(cobra.getCabeca().y < 0)) {
 			vida--;
-			if(vida<=0){
-				ativo=false;
-				audio.jogoParar();
-				recomecar();
-			}
-			esquerda=false;
-			cima=false;
-			baixo=false;
-			direita=true;
-			for (int z = 0; z < tamanhoCobra; z++) {
-				x[z] = 0 - z * 20;
-				y[z] = 0;
-
-			}
-
+			checarVida();
+			cobra.recomecar();
 		}
 
-		if ((x[0] >= LARGURA)||(x[0] < 0)) {
-
+		if ((cobra.getCabeca().x >= LARGURA)||(cobra.getCabeca().x < 0)) {
 			vida--;
-			if(vida<=0){
-				ativo=false;
-				audio.jogoParar();
-				recomecar();
-			}
-			esquerda=false;
-			cima=false;
-			baixo=false;
-			direita=true;
-			for (int z = 0; z < tamanhoCobra; z++) {
-				x[z] = 0 - z * 20;
-				y[z] = 0;
-			}
+			checarVida();
+			cobra.recomecar();
 		}
 
 		if(!ativo) {
@@ -476,7 +349,7 @@ public class Fase extends JPanel implements ActionListener {
 
 	private void checarMaca2() {
 		
-		if ((x[0] == maca2.getX()) && (y[0] == maca2.getY())) {
+		if ((cobra.getCabeca().x  == maca2.getX()) && (cobra.getCabeca().y == maca2.getY())) {
 			audio.acertoIniciar();
 			if(vida<=2){
 			vida++;}
@@ -487,13 +360,14 @@ public class Fase extends JPanel implements ActionListener {
 		}
 	}
 	
-	private void checarvida(){
-		if(vida==0){
+	private void checarVida(){
+		if(vida<=0){
 			ativo=false;
-			recomecar();
+			audio.jogoParar();
 			missaoResultado=missao.getResultado();
 			maca2.setX(-100);
 			maca2.setY(-100);
+			recomecar();
 		}
 	}
 	/**
@@ -501,7 +375,13 @@ public class Fase extends JPanel implements ActionListener {
 	 * =====================================================Area de Atualizão=================================================
 	 * 
 	 * */
-
+	private void gerarMissao(){
+		missao.missao();
+		missaoErrada1.missao();
+		missaoErrada2.missao();
+		missaoErrada3.missao();
+		missaoErrada4.missao();
+	}
 
 	private void recomecar(){
 		ranking.addNoRanking();
@@ -560,31 +440,6 @@ public class Fase extends JPanel implements ActionListener {
 			}
 		}
 	}
-
-//	private void mover() {
-//
-//		for (int z = tamanhoCobra; z > 0; z--) {
-//			x[z] = x[(z - 1)];
-//			y[z] = y[(z - 1)];
-//		}
-//
-//		if (esquerda) {
-//			x[0] -= BOLINHA_TAMANHO;
-//		}
-//
-//		if (direita) {
-//			x[0] += BOLINHA_TAMANHO;
-//		}
-//
-//		if (cima) {
-//			y[0] -= BOLINHA_TAMANHO;
-//		}
-//
-//		if (baixo) {
-//			y[0] += BOLINHA_TAMANHO;
-//		}
-//	}
-
 	/**
 	 * 
 	 * ==========================================Area de eventos====================================
@@ -598,38 +453,40 @@ public class Fase extends JPanel implements ActionListener {
 
 			int key = e.getKeyCode();
 
-			if ((key == KeyEvent.VK_LEFT) && (!direita)||(key == KeyEvent.VK_A) && (!direita)) {
-				esquerda = true;
-				cima = false;
-				baixo = false;
+			if ((key == KeyEvent.VK_LEFT) && (!cobra.isDireita())||(key == KeyEvent.VK_A) && (!direita)) {
+				
+				cobra.lado("esquerda");
 			}
 
-			if ((key == KeyEvent.VK_RIGHT) && (!esquerda)||(key == KeyEvent.VK_D) && (!esquerda)) {
-				direita = true;
-				cima = false;
-				baixo = false;
+			if ((key == KeyEvent.VK_RIGHT) && (!cobra.isEsquerda())||(key == KeyEvent.VK_D) && (!esquerda)) {
+				cobra.lado("direita");
 			}
 
-			if ((key == KeyEvent.VK_UP) && (!baixo)||(key == KeyEvent.VK_W)&& (!baixo)) {
-				cima = true;
-				direita = false;
-				esquerda = false;
+			if ((key == KeyEvent.VK_UP) && (!cobra.isBaixo())||(key == KeyEvent.VK_W)&& (!baixo)) {
+				cobra.lado("cima");
 			}
 
-			if ((key == KeyEvent.VK_DOWN) && (!cima)||(key == KeyEvent.VK_S)&& (!cima)) {
-				baixo = true;
-				direita = false;
-				esquerda = false;
+			if ((key == KeyEvent.VK_DOWN) && (!cobra.isCima())||(key == KeyEvent.VK_S)&& (!cima)) {
+				cobra.lado("baixo");
+			}
+			
+			if (key == KeyEvent.VK_P){
+				if(ativo){
+					ativo=false;
+					}else{
+						ativo=true;
+						}
+				
 			}
 		}
+	
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource()==recomecar){
-			for (int z = 0; z < tamanhoCobra; z++) {
-				x[z] = 0 - z * 20;
-				y[z] = 0;
-			}
+			
+			cobra.criaCorpo();
+			
 			escreve.gerarXML();
 			audio.jogoIniciar();
 			score=0;
@@ -649,20 +506,16 @@ public class Fase extends JPanel implements ActionListener {
 		}
 		
 		if (ativo) {
-			checarvida();
+			checarVida();
 			if(ativo){
 			checarPerguntas();
 			checarMissaoHit();
 			checarMaca2();
 			checarColisao();
-			//missao.checarMissao(resultado);
-//			mover();
 			cobra.mover();
 			repaint();
 			}
 		}
-
-	//	repaint();
 	}
 		
 	public void setVELOCIDADE(int vELOCIDADE) {

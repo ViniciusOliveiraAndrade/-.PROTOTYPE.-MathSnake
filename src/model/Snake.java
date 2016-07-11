@@ -19,18 +19,20 @@ public class Snake {
 	private int xInicial, yInicial;
 	private final int x[];
 	private final int y[];
-	
+	private String ladoInicial;
 	public Snake(int TAMANHOMATRIZ, int x, int y, String lado) {
 		
 		this.x= new int[TAMANHOMATRIZ];
 		this.y = new int[TAMANHOMATRIZ];
 		xInicial = x; 
 		yInicial=y;
+		ladoInicial=lado;
 		this.lado(lado);
 		criaCorpo(); 
 	
 	}
 	public void criaCorpo(){
+		
 		for (int z = 0; z < tamanhoCobra; z++) {
 			this.x[z] = xInicial - z * 20;
 			this.y[z] = yInicial;
@@ -118,7 +120,8 @@ public class Snake {
 		return p;
 	}
 	public void recomecar(){
-		
+		lado(ladoInicial);
+		criaCorpo();
 	}
 	public void mover() {
 
@@ -143,4 +146,19 @@ public class Snake {
 			y[0] += 20;
 		}
 	}
+	
+	public boolean isEsquerda() {
+		return esquerda;
+	}
+	public boolean isDireita() {
+		return direita;
+	}
+	public boolean isCima() {
+		return cima;
+	}
+	public boolean isBaixo() {
+		return baixo;
+	}
+
+	
 }

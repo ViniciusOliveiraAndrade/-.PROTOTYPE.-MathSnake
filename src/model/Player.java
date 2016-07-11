@@ -6,7 +6,7 @@ import main.Main;
 
 @XStreamAlias("Aluno")
 public class Player implements Comparable<Player>{
-	
+
 	private String nome;
 	private int a;
 	private int i=0;
@@ -25,15 +25,15 @@ public class Player implements Comparable<Player>{
 	private String operadoreAcerto[] ;
 	private String operadoreErros[] ;
 	private String operador;
-	
+
 	public Player(){
-		
+
 	}
-	
+
 	public Player(String nome){
 		this.nome=nome;
 	}
-	
+
 	public void carregarQuantidade(){
 		a=Main.opcoes.getQuantidadeDePerguntas();
 		acertosA = new int[a];
@@ -44,26 +44,26 @@ public class Player implements Comparable<Player>{
 		operadoreErros = new String[a];	
 		resultadoA = new int[a];
 		resultadoE = new int[a];
-			
+
 	}
-	
+
 	public void receberAcerto(Missao missao,int resultado ){
-			 d=missao.getA();
-			 operador =missao.getOperador();
-			 g=missao.getB();
-			 this.resultado = resultado;
-			
-	}
-	
-	public void receberErro(Missao missao,int resultado ){
-	
 		d=missao.getA();
 		operador =missao.getOperador();
 		g=missao.getB();
 		this.resultado = resultado;
 
-		}
-	
+	}
+
+	public void receberErro(Missao missao,int resultado ){
+
+		d=missao.getA();
+		operador =missao.getOperador();
+		g=missao.getB();
+		this.resultado = resultado;
+
+	}
+
 	public void addAcerto(){
 		acertosA[i]=d;
 		operadoreAcerto[i]=operador;
@@ -72,7 +72,7 @@ public class Player implements Comparable<Player>{
 		i++;
 		quantidadeDeAcertos++;
 	}
-	
+
 	public void addErro(){
 		errosA[j]=d;
 		operadoreErros[j]=operador;
@@ -81,33 +81,33 @@ public class Player implements Comparable<Player>{
 		j++;
 		quantidadeDeErros++;
 	}
-	
+
 	public void desempenho(){
 		System.out.println("Aluno:"+nome+"  Quantidade de Perguntas/Acertos: "+a+" / "+quantidadeDeAcertos);
-		
+
 		if(quantidadeDeAcertos>0){
 			System.out.println("Questoes acertadas:");
 			for(int z = 0;z<quantidadeDeAcertos;z++){
-			System.out.println(acertosA[z]+" "+operadoreAcerto[z]+" "+acertosB[z]+" = "+resultadoA[z]);
-		}}
+				System.out.println(acertosA[z]+" "+operadoreAcerto[z]+" "+acertosB[z]+" = "+resultadoA[z]);
+			}}
 		if(quantidadeDeErros>0){
-		System.out.println("Questoes erradas:");
-		for(int z = 0;z<quantidadeDeErros;z++){
-			System.out.println(errosA[z]+" "+operadoreErros[z]+" "+errosB[z]+" = "+resultadoE[z]);
-		}}
+			System.out.println("Questoes erradas:");
+			for(int z = 0;z<quantidadeDeErros;z++){
+				System.out.println(errosA[z]+" "+operadoreErros[z]+" "+errosB[z]+" = "+resultadoE[z]);
+			}}
 	}
-	
+
 	public void recomecar(){
 		for(int t=0;t<a;t++){
 			i=0;
 			j=0;
 			quantidadeDeAcertos=0;
 			quantidadeDeErros=0;
-			
+
 		}
-		
+
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
@@ -118,14 +118,25 @@ public class Player implements Comparable<Player>{
 
 	@Override
 	public int compareTo(Player o) {
-		
+
 		if (this.quantidadeDeAcertos < o.quantidadeDeAcertos) {
-            return -1;
-        }
-        if (this.quantidadeDeAcertos > o.quantidadeDeAcertos) {
-            return 1;
-        }	
+			return -1;
+		}
+		if (this.quantidadeDeAcertos > o.quantidadeDeAcertos) {
+			return 1;
+		}	
 		return 0;
 	}
-	
+
+	public void receberAcertos(Missao missao,int resultado ){
+		receberAcerto(missao,resultado ); 
+		addAcerto();
+
+	}
+	public void receberErros(Missao missao,int resultado ){
+		receberErro(missao,resultado );
+		addErro();
+
+	}
+
 }
