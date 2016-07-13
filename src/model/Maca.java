@@ -58,14 +58,6 @@ public class Maca extends Thread{
 		}
 	}
 	
-//	private void checarMaca(int x[],int y[],int score) {
-//
-//		if ((x[0] == this.x) && (y[0] == this.y)) {
-//			score+=1;
-//			tamanhoCobra++;
-//			gerarMacaLocal();
-//		}
-//	}
 	public boolean isAtivo() {
 		return ativo;
 	}
@@ -91,5 +83,8 @@ public class Maca extends Thread{
 	}
 	
 	
-	
+	public void hide(){
+		x=-100;
+		y=-100;
+	}
 }

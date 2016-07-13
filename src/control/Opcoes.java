@@ -15,15 +15,17 @@ public class Opcoes {
 	private int velocidadeNormal = 140;
 	private int velocidadeRapida = 90;
 	private int quantidadeDePerguntas = 20;
-	
+
 	private boolean veloBaixa;
 	private boolean veloNorma;
 	private boolean veloRapida;
+	private boolean multP;
 
 	public Opcoes(){
 		veloBaixa = false;
 		veloNorma = true;
 		veloRapida = false;
+		multP = false;
 	}
 
 	public void carregarConfiguracoes(Fase fase,Missao missao){
@@ -140,7 +142,7 @@ public class Opcoes {
 			divisao = false;
 			tudo = true;
 		}
-		
+
 		quantidadeDePerguntas = Integer.parseInt(tela.getQuantidade().getText());
 
 	}
@@ -230,6 +232,14 @@ public class Opcoes {
 		this.quantidadeDePerguntas = quantidadeDePerguntas;
 	}
 
+	public boolean isMultP() {
+		return multP;
+	}
+
+	public void setMultP(boolean multP) {
+		this.multP = multP;
+	}
+	
 
 
 }

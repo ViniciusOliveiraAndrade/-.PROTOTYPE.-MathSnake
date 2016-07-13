@@ -10,41 +10,39 @@ import main.Main;
 
 
 public class PanelMenu{
-	
+
 	private static final Font FONT = new Font("MV Boli", Font.BOLD, 20);		
 	static Life life;
 	private int aparencia;
-	
+
 	public void menudesenhar (Graphics g,int score,int vida,Missao missao){
 		try{
-			life = new Life(0, 30, 28, 5, 1, 710 ,35);
+			life = new Life(710 ,35);
 
 		}catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("Não foi possível carregar a Sprite");
 		}
-		
+
 		g.setFont(FONT);
 		g.setColor(Color.DARK_GRAY);
 		g.drawString("Score: "+score, 650, 30);
 		g.drawString("Vida: ", 650, 55);
-		
+
 		desenharVida(vida,aparencia,g);
-		
-		//g.drawImage(life.sprites[life.aparencia], life.posX, life.posY, null);
-		
+
 		g.drawString("Jogador: "+Main.player.getNome(), 650, 80);
 		if(missao.getA()>missao.getB()){g.drawString("Quanto é: "+missao.getA()+""+missao.getOperador()+""+missao.getB()+"=?", 650, 105);}
 		if(missao.getB()>missao.getA()){
 			if(missao.getOperador()!="-"){
-			g.drawString("Quanto é: "+missao.getB()+""+missao.getOperador()+""+missao.getA()+"=?", 650, 105);}
+				g.drawString("Quanto é: "+missao.getB()+""+missao.getOperador()+""+missao.getA()+"=?", 650, 105);}
 			if(missao.getOperador()=="-"){
 				g.drawString("Quanto é: "+missao.getA()+""+missao.getOperador()+""+missao.getB()+"=?", 650, 105);
 			}
-			}
+		}
 		if(missao.getA()==missao.getB()){g.drawString("Quanto é: "+missao.getA()+""+missao.getOperador()+""+missao.getB()+"=?", 650, 105);}
 	}
-	
+
 	public void setAparencia(int aparencia) {
 		this.aparencia = aparencia;
 	}

@@ -11,12 +11,15 @@ public class Snake {
 	private Image corpo;
 	
 	private int tamanhoCobra = 3;
+	private int vida=3;
+	private int xInicial, yInicial;
+	private int score=0;
 	
 	private boolean esquerda = false;
 	private boolean direita = false;
 	private boolean cima = false;
 	private boolean baixo = false;
-	private int xInicial, yInicial;
+	
 	private final int x[];
 	private final int y[];
 	private String ladoInicial;
@@ -159,6 +162,28 @@ public class Snake {
 	public boolean isBaixo() {
 		return baixo;
 	}
-
+	public void setTamanhoCobra(int tamanhoCobra) {
+		this.tamanhoCobra = tamanhoCobra;
+	}
+	public int getVida() {
+		return vida;
+	}
+	public void menosVida() {
+		this.vida --;
+	}
+	public void maisVida() {
+		this.vida ++;
+	}
+	public void setVida(int vida) {
+		this.vida = vida;
+	}
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
+	
 	
 }
