@@ -1,42 +1,27 @@
-# This is a prototype of a multiplayer tank destroyer game on LAN network.
+# This is a prototype of a multiplayer serious game.
 
 ## Requirements
 
-This prototype requires Java 7 onward.
+This prototype requires Java 7 onward, and the framework Xstream version 1.4.8 to persist the xml files.
 
 ## Introduction
 
-<b>Shoot</b> is a prototype of a shoot and destroy game where you can play with another player in a LAN network by socket.
+<b>MathSnake</b> is a prototype of a serious game created to help child learn the basic math operations by play a snake game.
 
-One of the players has to be the host of the match, and the other has to join the match. 
+The multiplayer work on the same machine, one player will play the game with the arrows and the other with the "W", "S", "A", D" letters.
 
-## Host
-
-* To Create a server just click on HOST button.
+## MathSnake
 
 <center><img src="Figures/F1.png"></center>
 
-* Then select the port you want to watch and wait for the other player.
+* The user can configure the level speed of the snake, and also the operator.
 
 <center><img src="Figures/F2.png"></center>
 
-<center><img src="Figures/F4.png"></center>
-
-
-## Join
-
-* To join a server just click on JOIN button.
-
-<center><img src="Figures/F1.png"></center>
-
-* Fill up the port and the IP of the server.
+* Mission: the user has to eat the ball with the right answer of the question.
 
 <center><img src="Figures/F3.png"></center>
 
-* Have fun!
+* Multplayer is available.
 
 <center><img src="Figures/F5.png"></center>
-
-
-
-
