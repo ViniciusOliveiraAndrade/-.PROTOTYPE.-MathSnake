@@ -24,4 +24,4 @@ The multiplayer work on the same machine, one player will play the game with the
 
 * Multplayer is available.
 
-<center><img src="Figures/F5.png"></center>
+<center><img src="Figures/F4.png"></center>
